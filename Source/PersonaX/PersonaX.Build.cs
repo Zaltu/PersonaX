@@ -9,5 +9,7 @@ public class PersonaX : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "UMG", "Slate", "SlateCore"});
-	}
+        PublicIncludePaths.Add("C:/LUA");
+        PublicAdditionalLibraries.Add("C:/LUA/lua51.lib");
+    }
 }

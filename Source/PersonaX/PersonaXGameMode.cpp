@@ -4,6 +4,7 @@
 #include "PersonaXCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 
+
 APersonaXGameMode::APersonaXGameMode()
 {
 	// set default pawn class to our Blueprinted character
