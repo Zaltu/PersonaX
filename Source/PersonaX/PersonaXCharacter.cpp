@@ -54,8 +54,6 @@ void APersonaXCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 {
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &APersonaXCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &APersonaXCharacter::MoveRight);
@@ -68,10 +66,6 @@ void APersonaXCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &APersonaXCharacter::LookUpAtRate);
 
-	// handle touch devices
-	PlayerInputComponent->BindTouch(IE_Pressed, this, &APersonaXCharacter::TouchStarted);
-	PlayerInputComponent->BindTouch(IE_Released, this, &APersonaXCharacter::TouchStopped);
-
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &APersonaXCharacter::OnResetVR);
 }
@@ -80,16 +74,6 @@ void APersonaXCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 void APersonaXCharacter::OnResetVR()
 {
 	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
-}
-
-void APersonaXCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
-{
-		Jump();
-}
-
-void APersonaXCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
-{
-		StopJumping();
 }
 
 void APersonaXCharacter::TurnAtRate(float Rate)

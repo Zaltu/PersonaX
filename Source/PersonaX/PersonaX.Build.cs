@@ -10,6 +10,7 @@ public class PersonaX : ModuleRules
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "UMG", "Slate", "SlateCore"});
         PublicIncludePaths.Add("C:/LUA");
+		PublicIncludePaths.Add("K:/Framework/cincludes");
         PublicAdditionalLibraries.Add("C:/LUA/lua51.lib");
     }
 }
