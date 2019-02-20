@@ -30,7 +30,7 @@ public:
 	float BaseLookUpRate;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Lock)
-	bool bFreeroam;
+	bool Freeroam;
 
 protected:
 

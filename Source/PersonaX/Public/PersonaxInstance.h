@@ -1,6 +1,7 @@
 #pragma once
 
 #include <json.hpp>
+
 extern "C"{
     #include <lua.h>
     #include <lauxlib.h>
@@ -11,8 +12,6 @@ extern "C"{
 #include "Engine/GameInstance.h" 
 
 #include "PersonaxInstance.generated.h"
-
-using json = nlohmann::json;
 
 /*Defines runtime Lua import path, and imports the state, which instantiates the game state
 and sets it as global variable. Defined for explicit runtime. Executable MUST be one level
@@ -32,7 +31,7 @@ public:
 	lua_State *L;
 
 	// Send event to the GSV
-	json sendStateEvent(json event);
+	nlohmann::json sendStateEvent(nlohmann::json event);
 
-	json getUpdate();
+	nlohmann::json getUpdate();
 };

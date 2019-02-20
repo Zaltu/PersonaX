@@ -26,6 +26,10 @@ APersonaXCharacter::APersonaXCharacter()
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
+	//Set freeroam on by default
+	UE_LOG(LogTemp, Warning, TEXT("Setting freeroam to true"));
+	Freeroam = true;
+
 	// Configure character movement
 	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f); // ...at this rotation rate
@@ -53,8 +57,13 @@ void APersonaXCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
 
+	// freeroam movement
 	PlayerInputComponent->BindAxis("MoveForward", this, &APersonaXCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &APersonaXCharacter::MoveRight);
+
+	// Button input handlers
+	PlayerInputComponent->BindAction("Select", IE_Pressed, this, &APersonaXCharacter::Select);
+	PlayerInputComponent->BindAction("Back", IE_Pressed, this, &APersonaXCharacter::Back);
 
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
@@ -68,9 +77,22 @@ void APersonaXCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &APersonaXCharacter::OnResetVR);
 }
 
-void APersonaXCharacter::Select(){}
+void APersonaXCharacter::Select(){
+	//IF valid collision detected
+	UE_LOG(LogTemp, Warning, TEXT("freeroam was %s"), (Freeroam ? TEXT("true") : TEXT("false")));
+	UE_LOG(LogTemp, Warning, TEXT("Setting freeroam to false"));
+	if (Freeroam){
+		Freeroam = false;
+	}else{
+		Back();
+	}
+}
 
-void APersonaXCharacter::Back(){}
+void APersonaXCharacter::Back(){
+	//Likely also called by select
+	UE_LOG(LogTemp, Warning, TEXT("Setting freeroam to true"));
+	Freeroam = true;
+}
 
 void APersonaXCharacter::Skip(){}
 
@@ -93,7 +115,7 @@ void APersonaXCharacter::LookUpAtRate(float Rate)
 
 void APersonaXCharacter::MoveForward(float Value)
 {
-	if ((Controller != NULL) && (Value != 0.0f))
+	if ((Controller != NULL) && (Value != 0.0f) && (Freeroam))
 	{
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
@@ -107,7 +129,7 @@ void APersonaXCharacter::MoveForward(float Value)
 
 void APersonaXCharacter::MoveRight(float Value)
 {
-	if ( (Controller != NULL) && (Value != 0.0f) )
+	if ( (Controller != NULL) && (Value != 0.0f) && (Freeroam))
 	{
 		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();

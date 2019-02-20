@@ -26,9 +26,6 @@ json UPersonaxInstance::sendStateEvent(json event){
     lua_pushstring(L, event.dump().c_str());
     lua_pcall(L, 1, 1, 0);
     std::string returncode = lua_tostring(L, -1);
-    /*if (returncode != "0"){
-        TODO LOG
-    }*/
     lua_pop(L, 1);
     return getUpdate();
 }
