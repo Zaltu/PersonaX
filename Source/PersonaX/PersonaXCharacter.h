@@ -29,7 +29,19 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Lock)
+	bool bFreeroam;
+
 protected:
+
+	/**Primary fucker, used for activating things*/
+	void Select();
+
+	/**Secondary fucker, used for returning when possible*/
+	void Back();
+
+	/**Unimplemented for now*/
+	void Skip();
 
 	/** Resets HMD orientation in VR. */
 	void OnResetVR();

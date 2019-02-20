@@ -14,6 +14,11 @@ extern "C"{
 
 using json = nlohmann::json;
 
+/*Defines runtime Lua import path, and imports the state, which instantiates the game state
+and sets it as global variable. Defined for explicit runtime. Executable MUST be one level
+above model with this current const value.*/
+const char * const LUA_LOCAL_PREP = "package.path = package.path..';./model/?.lua' require('state')";
+
 /**
  * 
  */
@@ -30,8 +35,4 @@ public:
 	json sendStateEvent(json event);
 
 	json getUpdate();
-
-	/** Increment this value in any map, change map, and notice it persists! */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="TEST")
-	int32 InterLevelPersistentValue;
 };

@@ -1,13 +1,9 @@
-#include <json.hpp>
 #include "PersonaxInstance.h"
 #include "PersonaX.h"
 
-using json = nlohmann::json;
+#include <json.hpp>
 
-/*Defines runtime Lua import path, and imports the state, which instantiates the game state
-and sets it as global variable. Defined for explicit runtime. Executable MUST be one level
-above model with this current const value.*/
-const char* LUA_LOCAL_PREP = "package.path = package.path..';./model/?.lua' require('state')";
+using json = nlohmann::json;
 
 UPersonaxInstance::UPersonaxInstance(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
