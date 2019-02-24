@@ -10,7 +10,7 @@ UPersonaxInstance::UPersonaxInstance(const FObjectInitializer& ObjectInitializer
 {
 	L = lua_open();
     luaL_openlibs(L);
-    luaL_dostring(L, LUA_LOCAL_PREP);
+    luaL_dostring(L, LUA_LOCAL_PREP.c_str());
     lua_getglobal(L, "state");
 }
 

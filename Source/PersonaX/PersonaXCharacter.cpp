@@ -80,8 +80,8 @@ void APersonaXCharacter::SetupPlayerInputComponent(class UInputComponent* Player
 void APersonaXCharacter::Select(){
 	//IF valid collision detected
 	UE_LOG(LogTemp, Warning, TEXT("freeroam was %s"), (Freeroam ? TEXT("true") : TEXT("false")));
-	UE_LOG(LogTemp, Warning, TEXT("Setting freeroam to false"));
 	if (Freeroam){
+		UE_LOG(LogTemp, Warning, TEXT("Setting freeroam to false"));
 		Freeroam = false;
 	}else{
 		Back();

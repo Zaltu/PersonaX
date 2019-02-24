@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+
 #include "PersonaXCharacter.generated.h"
+
 
 UCLASS(config=Game)
 class APersonaXCharacter : public ACharacter

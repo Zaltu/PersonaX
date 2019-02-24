@@ -13,10 +13,13 @@ extern "C"{
 
 #include "PersonaxInstance.generated.h"
 
+// Fetch the path that contains the Lua source code. Undoubtably different in development and delivery: TODO
+const std::string luapath = std::string(TCHAR_TO_UTF8(*FPaths::ConvertRelativePathToFull(FPaths::ProjectDir()))) + "Source/Lua/?.lua";
+
 /*Defines runtime Lua import path, and imports the state, which instantiates the game state
-and sets it as global variable. Defined for explicit runtime. Executable MUST be one level
-above model with this current const value.*/
-const char * const LUA_LOCAL_PREP = "package.path = package.path..';./model/?.lua' require('state')";
+and sets it as global variable. Defined for explicit runtime. Currently checks in a Lua folder
+under Source.*/
+const std::string LUA_LOCAL_PREP = "package.path = package.path..'" + luapath + "' require('state')";
 
 /**
  * 
