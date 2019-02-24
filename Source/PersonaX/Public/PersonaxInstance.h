@@ -13,13 +13,14 @@ extern "C"{
 
 #include "PersonaxInstance.generated.h"
 
-// Fetch the path that contains the Lua source code. Undoubtably different in development and delivery: TODO
-const std::string luapath = std::string(TCHAR_TO_UTF8(*FPaths::ConvertRelativePathToFull(FPaths::ProjectDir()))) + "Source/Lua/?.lua";
-
-/*Defines runtime Lua import path, and imports the state, which instantiates the game state
-and sets it as global variable. Defined for explicit runtime. Currently checks in a Lua folder
-under Source.*/
-const std::string LUA_LOCAL_PREP = "package.path = package.path..'" + luapath + "' require('state')";
+/*Defines runtime Lua import paths, and imports the state, which instantiates the game state
+and sets it as global variable. Defined for explicit runtime. Currently checks for the paths
+in my personal clone of the lua src.*/
+const char * const LUA_PERSONAX_PATH = "package.path = package.path..';K:/Git Repos/personax-lua-src/model/?.lua'";
+const char * const MY_LUA_PATH = "package.path = package.path..';K:/Git Repos/personax-lua-src/extlib/lua_path/?.lua'";
+const char * const MY_LUA_CPATH = "package.cpath = package.cpath..';K:/Git Repos/personax-lua-src/extlib/lua_cpath/?.dll'";
+const char * const GLOBAL_DATAPATH = "_G.DATAPATH = 'K:/Git Repos/personax-lua-src/model/data/'";
+const char * const REQUIRE_STATE = "require('state')";
 
 /**
  * 
@@ -37,4 +38,7 @@ public:
 	nlohmann::json sendStateEvent(nlohmann::json event);
 
 	nlohmann::json getUpdate();
+private:
+	void setupLuaState();
+	void runPathSet(const char* command);
 };

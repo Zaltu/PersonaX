@@ -7,7 +7,7 @@ public class PersonaX : ModuleRules
 	public PersonaX(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-        bEnableExceptions = true; // Enabled /EHsc, which is required for nlohmann::json
+        //bEnableExceptions = true; // Enabled /EHsc, which is required for nlohmann::json
 
         PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "UMG", "Slate", "SlateCore"});
         PublicIncludePaths.Add("C:/LUA");

@@ -8,10 +8,7 @@ using json = nlohmann::json;
 UPersonaxInstance::UPersonaxInstance(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	L = lua_open();
-    luaL_openlibs(L);
-    luaL_dostring(L, LUA_LOCAL_PREP.c_str());
-    lua_getglobal(L, "state");
+	setupLuaState();
 }
 
 /**
@@ -43,4 +40,24 @@ json UPersonaxInstance::getUpdate(){
 	json update = json::parse(lua_tostring(L, -1));
 	lua_pop(L, 1);
 	return update;
+}
+
+void UPersonaxInstance::setupLuaState(){
+    L = lua_open();
+    luaL_openlibs(L);
+    UE_LOG(LogTemp, Warning, TEXT("Forcing re-evaluation of Lua paths."));
+    runPathSet(LUA_PERSONAX_PATH);
+    runPathSet(MY_LUA_PATH);
+    runPathSet(MY_LUA_CPATH);
+    runPathSet(GLOBAL_DATAPATH);
+    runPathSet(REQUIRE_STATE);
+    lua_getglobal(L, "state");
+}
+
+void UPersonaxInstance::runPathSet(const char* command){
+    int code = luaL_dostring(L, command);
+    if (code != 0){
+        std::string luaerror = lua_tostring(L, -1);
+        UE_LOG(LogTemp, Error, TEXT("Error initializing Lua State:\n%s"), *FString(luaerror.c_str()));
+    }
 }
